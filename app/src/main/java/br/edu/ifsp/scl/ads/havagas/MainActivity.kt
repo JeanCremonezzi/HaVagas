@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import android.widget.Toast
 import br.edu.ifsp.scl.ads.havagas.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -14,6 +15,35 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         with(binding) {
+            saveBtn.setOnClickListener { view ->
+                var message : String = ""
+
+                if (fullNameInp.text.isNotBlank()) message += "Nome completo: ${fullNameInp.text}\n"
+
+                if (emailInp.text.isNotBlank()) {
+                    message += "E-mail: ${emailInp.text}\n"
+                    if (emailChk.isChecked) message += "Receber e-mails: Sim\n"
+                }
+
+                if (phoneInp.text.isNotBlank()) {
+                    val phonetype = if (phoneResidencialRd.isChecked) "Residencial" else "Comercial"
+                    message += "Telefone (${phonetype}): ${phoneInp.text}\n"
+                }
+                if (cellphoneInp.text.isNotBlank()) message += "Telefone (Celular): ${cellphoneInp.text}\n"
+
+                message += "Sexo: " + if (sexMaleRd.isChecked) "Masculino\n" else "Feminino\n"
+
+                message += "Formação: ${educationSp.selectedItem}\n"
+                if (conclusionYearInp.text.isNotBlank()) message += "Ano de conclusão: ${conclusionYearInp.text}\n"
+                if (institutionInp.text.isNotBlank()) message += "Instituição: ${institutionInp.text}\n"
+                if (monographyInp.text.isNotBlank()) message += "Monografia: ${monographyInp.text}\n"
+                if (supervisorInp.text.isNotBlank()) message += "Orientador: ${supervisorInp.text}\n"
+
+                if (interestInp.text.isNotBlank()) message += "Vagas de interesse: ${interestInp.text}\n"
+
+                Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
+            }
+
             cleanBtn.setOnClickListener { view ->
                 fullNameInp.setText("")
                 emailInp.setText("")
