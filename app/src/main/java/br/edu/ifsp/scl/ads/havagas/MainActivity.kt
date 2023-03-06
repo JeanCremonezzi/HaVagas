@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
                 phoneRd.check(phoneResidencialRd.id)
                 phoneSw.isChecked = false
                 sexRd.check(sexMaleRd.id)
+                educationSp.setSelection(0)
                 conclusionYearInp.setText("")
                 institutionInp.setText("")
                 monographyInp.setText("")
