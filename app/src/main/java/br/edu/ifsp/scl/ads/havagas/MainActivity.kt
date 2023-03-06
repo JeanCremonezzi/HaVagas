@@ -17,6 +17,21 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         with(binding) {
+            cleanBtn.setOnClickListener { view ->
+                fullNameInp.setText("")
+                emailInp.setText("")
+                emailChk.isChecked = false
+                phoneInp.setText("")
+                phoneRd.check(phoneResidencialRd.id)
+                phoneSw.isChecked = false
+                sexRd.check(sexMaleRd.id)
+                conclusionYearInp.setText("")
+                institutionInp.setText("")
+                monographyInp.setText("")
+                supervisorInp.setText("")
+                interestInp.setText("")
+            }
+            
             phoneSw.setOnCheckedChangeListener { buttonView, isChecked ->
 
                 if (isChecked)
