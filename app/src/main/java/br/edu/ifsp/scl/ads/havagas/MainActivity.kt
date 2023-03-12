@@ -35,9 +35,17 @@ class MainActivity : AppCompatActivity() {
 
                 message += "Formação: ${educationSp.selectedItem}\n"
                 if (conclusionYearInp.text.isNotBlank()) message += "Ano de conclusão: ${conclusionYearInp.text}\n"
-                if (institutionInp.text.isNotBlank()) message += "Instituição: ${institutionInp.text}\n"
-                if (monographyInp.text.isNotBlank()) message += "Monografia: ${monographyInp.text}\n"
-                if (supervisorInp.text.isNotBlank()) message += "Orientador: ${supervisorInp.text}\n"
+
+                when (educationSp.selectedItemPosition) {
+                    2, 3-> {
+                        if (institutionInp.text.isNotBlank()) message += "Instituição: ${institutionInp.text}\n"
+                    }
+                    4, 5 -> {
+                        if (institutionInp.text.isNotBlank()) message += "Instituição: ${institutionInp.text}\n"
+                        if (monographyInp.text.isNotBlank()) message += "Monografia: ${monographyInp.text}\n"
+                        if (supervisorInp.text.isNotBlank()) message += "Orientador: ${supervisorInp.text}\n"
+                    }
+                }
 
                 if (interestInp.text.isNotBlank()) message += "Vagas de interesse: ${interestInp.text}\n"
 
@@ -93,16 +101,57 @@ class MainActivity : AppCompatActivity() {
                             supervisorContainer.visibility = View.VISIBLE
                         }
                     }
-
-                    conclusionYearInp.setText("")
-                    institutionInp.setText("")
-                    monographyInp.setText("")
-                    supervisorInp.setText("")
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                     TODO("Not yet implemented")
                 }
+            }
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        with(outState) {
+            with(binding) {
+                putString("name", fullNameInp.text.toString())
+                putString("email", emailInp.text.toString())
+                putBoolean("emailCheck", emailChk.isChecked)
+                putString("phone", phoneInp.text.toString())
+                putInt("phoneTypeId", phoneRd.checkedRadioButtonId)
+                putBoolean("useCellphone", phoneSw.isChecked)
+                putString("cellphone", cellphoneInp.text.toString())
+                putInt("sexId", sexRd.checkedRadioButtonId)
+                putInt("education", educationSp.selectedItemPosition)
+                putString("conclusion", conclusionYearInp.text.toString())
+                putString("institution", institutionInp.text.toString())
+                putString("monography", monographyInp.text.toString())
+                putString("supervisor", supervisorInp.text.toString())
+                putString("interests", interestInp.text.toString())
+            }
+        }
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        with(savedInstanceState) {
+            with(binding) {
+                fullNameInp.setText(getString("name"))
+                emailInp.setText(getString("email"))
+                emailChk.isChecked = getBoolean("emailCheck")
+                phoneInp.setText(getString("phone"))
+                phoneRd.check(getInt("phoneTypeId"))
+                phoneSw.isChecked = getBoolean("useCellphone")
+                cellphoneInp.setText(getString("cellphone"))
+                sexRd.check(getInt("sexId"))
+                educationSp.setSelection(getInt("education"))
+                conclusionYearInp.setText(getString("conclusion"))
+                institutionInp.setText(getString("institution"))
+                monographyInp.setText(getString("monography"))
+                supervisorInp.setText(getString("supervisor"))
+                interestInp.setText(getString("interests"))
             }
         }
     }
